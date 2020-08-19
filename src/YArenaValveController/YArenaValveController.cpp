@@ -1,20 +1,20 @@
 // ----------------------------------------------------------------------------
-// YArenaController.cpp
+// YArenaValveController.cpp
 //
 //
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#include "../YArenaController.h"
+#include "../YArenaValveController.h"
 
 
 using namespace y_arena_controller;
 
-YArenaController::YArenaController()
+YArenaValveController::YArenaValveController()
 {
 }
 
-void YArenaController::setup()
+void YArenaValveController::setup()
 {
   // Parent Setup
   ModularDeviceBase::setup();

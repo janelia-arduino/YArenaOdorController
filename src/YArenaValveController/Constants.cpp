@@ -14,7 +14,7 @@ namespace constants
 {
 CONSTANT_STRING(device_name,"y_arena_controller");
 
-CONSTANT_STRING(firmware_name,"YArenaController");
+CONSTANT_STRING(firmware_name,"YArenaValveController");
 // Use semantic versioning http://semver.org/
 const modular_server::FirmwareInfo firmware_info =
 {

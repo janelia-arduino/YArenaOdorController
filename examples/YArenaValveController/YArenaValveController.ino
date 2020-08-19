@@ -1,7 +1,7 @@
-#include <YArenaController.h>
+#include <YArenaValveController.h>
 
 
-YArenaController dev;
+YArenaValveController dev;
 
 void setup()
 {

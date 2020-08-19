@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// YArenaController.h
+// YArenaValveController.h
 //
 //
 // Authors:
@@ -17,13 +17,13 @@
 #include <ModularServer.h>
 #include <ModularDeviceBase.h>
 
-#include "YArenaController/Constants.h"
+#include "YArenaValveController/Constants.h"
 
 
-class YArenaController : public ModularDeviceBase
+class YArenaValveController : public ModularDeviceBase
 {
 public:
-  YArenaController();
+  YArenaValveController();
   virtual void setup();
 
   void setValve(size_t arm,
