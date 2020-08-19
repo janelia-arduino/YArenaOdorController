@@ -20,22 +20,14 @@
 #include "YArenaController/Constants.h"
 
 
-class YArenaController : public ServoController
+class YArenaController : public ModularDeviceBase
 {
 public:
   YArenaController();
   virtual void setup();
 
-  void expose(size_t channel);
-  void exposeForDuration(size_t channel,
-    size_t duration);
-  void exposeAll();
-  void exposeAllForDuration(size_t duration);
-  void hide(size_t channel);
-  void hideAll();
-  bool exposed(size_t channel);
-  void toggle(size_t channel);
-  void toggleAll();
+  void setValve(size_t arm,
+    size_t valve);
 
 private:
   modular_server::Property properties_[y_arena_controller::constants::PROPERTY_COUNT_MAX];
@@ -43,20 +35,7 @@ private:
   modular_server::Function functions_[y_arena_controller::constants::FUNCTION_COUNT_MAX];
   modular_server::Callback callbacks_[y_arena_controller::constants::CALLBACK_COUNT_MAX];
 
-  bool exposed_[y_arena_controller::constants::CHANNEL_COUNT];
-  long expose_durations_[y_arena_controller::constants::CHANNEL_COUNT];
-
   // Handlers
-  void updateExposeOrHideAngleHandler(size_t channel);
-  void exposeHandler();
-  void exposeForDurationHandler();
-  void exposeAllForDurationHandler();
-  void hideHandler();
-  void hideHandler(int channel);
-  void waitThenHideHandler(int channel);
-  void exposeAllHandler(modular_server::Pin * pin_ptr);
-  void hideAllHandler(modular_server::Pin * pin_ptr);
-  void toggleAllHandler(modular_server::Pin * pin_ptr);
 
 };
 
