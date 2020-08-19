@@ -5,8 +5,8 @@
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#ifndef Y_ARENA_CONTROLLER_H
-#define Y_ARENA_CONTROLLER_H
+#ifndef Y_ARENA_VALVE_CONTROLLER_H
+#define Y_ARENA_VALVE_CONTROLLER_H
 #include <ArduinoJson.h>
 #include <JsonStream.h>
 #include <Array.h>
@@ -30,10 +30,10 @@ public:
     size_t valve);
 
 private:
-  modular_server::Property properties_[y_arena_controller::constants::PROPERTY_COUNT_MAX];
-  modular_server::Parameter parameters_[y_arena_controller::constants::PARAMETER_COUNT_MAX];
-  modular_server::Function functions_[y_arena_controller::constants::FUNCTION_COUNT_MAX];
-  modular_server::Callback callbacks_[y_arena_controller::constants::CALLBACK_COUNT_MAX];
+  modular_server::Property properties_[y_arena_valve_controller::constants::PROPERTY_COUNT_MAX];
+  modular_server::Parameter parameters_[y_arena_valve_controller::constants::PARAMETER_COUNT_MAX];
+  modular_server::Function functions_[y_arena_valve_controller::constants::FUNCTION_COUNT_MAX];
+  modular_server::Callback callbacks_[y_arena_valve_controller::constants::CALLBACK_COUNT_MAX];
 
   // Handlers
 

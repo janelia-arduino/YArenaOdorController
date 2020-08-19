@@ -8,7 +8,7 @@
 #include "../YArenaValveController.h"
 
 
-using namespace y_arena_controller;
+using namespace y_arena_valve_controller;
 
 YArenaValveController::YArenaValveController()
 {

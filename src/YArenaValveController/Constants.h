@@ -5,13 +5,13 @@
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#ifndef Y_ARENA_CONTROLLER_CONSTANTS_H
-#define Y_ARENA_CONTROLLER_CONSTANTS_H
+#ifndef Y_ARENA_VALVE_CONTROLLER_CONSTANTS_H
+#define Y_ARENA_VALVE_CONTROLLER_CONSTANTS_H
 #include <ConstantVariable.h>
 #include <ModularDeviceBase.h>
 
 
-namespace y_arena_controller
+namespace y_arena_valve_controller
 {
 namespace constants
 {

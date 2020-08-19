@@ -5,14 +5,14 @@
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#ifndef Y_ARENA_CONTROLLER_4_CONSTANTS_H
-#define Y_ARENA_CONTROLLER_4_CONSTANTS_H
+#ifndef Y_ARENA_VALVE_CONTROLLER_4_CONSTANTS_H
+#define Y_ARENA_VALVE_CONTROLLER_4_CONSTANTS_H
 #include "Constants.h"
 
 
 #if defined(__IMXRT1062__)
 
-namespace y_arena_controller
+namespace y_arena_valve_controller
 {
 namespace constants
 {

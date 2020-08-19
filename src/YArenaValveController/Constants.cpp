@@ -8,11 +8,11 @@
 #include "Constants.h"
 
 
-namespace y_arena_controller
+namespace y_arena_valve_controller
 {
 namespace constants
 {
-CONSTANT_STRING(device_name,"y_arena_controller");
+CONSTANT_STRING(device_name,"y_arena_valve_controller");
 
 CONSTANT_STRING(firmware_name,"YArenaValveController");
 // Use semantic versioning http://semver.org/
@@ -24,7 +24,7 @@ const modular_server::FirmwareInfo firmware_info =
   .version_patch=0,
 };
 
-CONSTANT_STRING(hardware_name,"y_arena_controller");
+CONSTANT_STRING(hardware_name,"y_arena_valve_controller");
 
 // Pins
 

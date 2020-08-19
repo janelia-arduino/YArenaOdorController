@@ -10,7 +10,7 @@
 
 #if defined(__IMXRT1062__)
 
-namespace y_arena_controller
+namespace y_arena_valve_controller
 {
 namespace constants
 {
