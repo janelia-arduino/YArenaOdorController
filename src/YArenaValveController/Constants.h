@@ -42,6 +42,11 @@ extern const size_t valve_pin_numbers[ARM_COUNT][VALVE_PER_ARM_COUNT];
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
 
 // Parameters
+extern ConstantString valves_parameter_name;
+extern const size_t valves_element_min;
+extern const size_t valves_element_max;
+extern const size_t valves_length_min;
+extern const size_t valves_length_max;
 
 // Functions
 extern ConstantString set_valves_function_name;

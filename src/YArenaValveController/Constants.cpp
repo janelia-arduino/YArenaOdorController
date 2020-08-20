@@ -33,6 +33,11 @@ CONSTANT_STRING(hardware_name,"y_arena_valve_controller");
 // Properties
 
 // Parameters
+CONSTANT_STRING(valves_parameter_name,"valves");
+const size_t valves_element_min = 0;
+const size_t valves_element_max = VALVE_PER_ARM_COUNT - 1;
+const size_t valves_length_min = ARM_COUNT;
+const size_t valves_length_max = ARM_COUNT;
 
 // Functions
 CONSTANT_STRING(set_valves_function_name,"setValves");
