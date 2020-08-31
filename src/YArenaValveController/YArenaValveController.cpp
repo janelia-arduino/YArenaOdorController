@@ -77,14 +77,12 @@ void YArenaValveController::setValveOff(size_t arm,
   size_t valve)
 {
   digitalWrite(constants::valve_pin_numbers[arm][valve],LOW);
-  Serial << "setValveOff: arm = " << arm << ", valve = " << valve << endl;
 }
 
 void YArenaValveController::setValveOn(size_t arm,
   size_t valve)
 {
   digitalWrite(constants::valve_pin_numbers[arm][valve],HIGH);
-  Serial << "setValveOn: arm = " << arm << ", valve = " << valve << endl;
 }
 
 void YArenaValveController::setValves(ArduinoJson::JsonArray & valves)

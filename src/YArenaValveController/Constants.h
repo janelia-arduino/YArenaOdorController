@@ -56,5 +56,5 @@ extern ConstantString set_valves_function_name;
 // Errors
 }
 }
-#include "4.h"
+#include "TEENSY40.h"
 #endif
