@@ -29,29 +29,26 @@ extern const modular_server::FirmwareInfo firmware_info;
 extern ConstantString hardware_name;
 extern const modular_server::HardwareInfo hardware_info;
 
-enum{ARM_COUNT=3};
-enum{VALVE_PER_ARM_COUNT=3};
-
-extern const size_t valve_pin_numbers[ARM_COUNT][VALVE_PER_ARM_COUNT];
-
 // Pins
 
 // Units
 
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
+extern ConstantString initial_valves_setting_property_name;
 
 // Parameters
 extern ConstantString valves_parameter_name;
-extern const size_t valves_element_min;
-extern const size_t valves_element_max;
-extern const size_t valves_length_min;
-extern const size_t valves_length_max;
+extern const long valves_element_min;
+extern const long valves_element_max;
+extern const long valves_length_min;
+extern const long valves_length_max;
 
 // Functions
 extern ConstantString set_valves_function_name;
 
 // Callbacks
+extern ConstantString set_all_valves_off_callback_name;
 
 // Errors
 }

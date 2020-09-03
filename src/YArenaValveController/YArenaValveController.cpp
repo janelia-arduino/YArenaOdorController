@@ -37,7 +37,7 @@ void YArenaValveController::setup()
     for (size_t valve=0; valve<constants::VALVE_PER_ARM_COUNT; ++valve)
     {
       pinMode(constants::valve_pin_numbers[arm][valve],OUTPUT);
-      setValveOff(arm,valve);
+      setArmValveOff(arm,valve);
     }
   }
 
@@ -49,6 +49,8 @@ void YArenaValveController::setup()
     callbacks_);
 
   // Properties
+  modular_server::Property & initial_valves_setting_property = modular_server_.createProperty(constants::initial_valves_setting_property_name,constants::initial_valves_setting_default);
+  initial_valves_setting_property.setRange(constants::valves_element_min,constants::valves_element_max);
 
   // Parameters
   modular_server::Parameter & valves_parameter = modular_server_.createParameter(constants::valves_parameter_name);
@@ -61,32 +63,52 @@ void YArenaValveController::setup()
   set_valves_function.addParameter(valves_parameter);
 
   // Callbacks
+  modular_server::Callback & set_all_valves_off_callback = modular_server_.createCallback(constants::set_all_valves_off_callback_name);
+  set_all_valves_off_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaValveController::setAllValvesOffHandler));
+
+  initializeValves();
 }
 
-void YArenaValveController::setValve(size_t arm,
+void YArenaValveController::setArmValve(size_t arm,
   size_t valve)
 {
-  setAllValvesOff(arm);
-  setValveOn(arm,valve);
+  setAllArmValvesOff(arm);
+  setArmValveOn(arm,valve);
 }
 
-void YArenaValveController::setValveOff(size_t arm,
+void YArenaValveController::setAllValvesOff()
+{
+  for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
+  {
+    setAllArmValvesOff(arm);
+  }
+}
+
+void YArenaValveController::setArmValveOff(size_t arm,
   size_t valve)
 {
+  if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
+  {
+    return;
+  }
   digitalWrite(constants::valve_pin_numbers[arm][valve],LOW);
 }
 
-void YArenaValveController::setValveOn(size_t arm,
+void YArenaValveController::setArmValveOn(size_t arm,
   size_t valve)
 {
+  if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
+  {
+    return;
+  }
   digitalWrite(constants::valve_pin_numbers[arm][valve],HIGH);
 }
 
-void YArenaValveController::setAllValvesOff(size_t arm)
+void YArenaValveController::setAllArmValvesOff(size_t arm)
 {
   for (size_t v=0; v<constants::VALVE_PER_ARM_COUNT; ++v)
   {
-    setValveOff(arm,v);
+    setArmValveOff(arm,v);
   }
 }
 
@@ -98,7 +120,18 @@ void YArenaValveController::setValves(ArduinoJson::JsonArray & valves)
        ++it)
   {
     size_t valve = *it;
-    setValve(arm++,valve);
+    setArmValve(arm++,valve);
+  }
+}
+
+void YArenaValveController::initializeValves()
+{
+  modular_server::Property & initial_valves_setting_property = modular_server_.property(constants::initial_valves_setting_property_name);
+  long valve;
+  for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
+  {
+    initial_valves_setting_property.getElementValue(arm,valve);
+    setArmValve(arm,valve);
   }
 }
 
@@ -107,4 +140,9 @@ void YArenaValveController::setValvesHandler()
   ArduinoJson::JsonArray * valves_ptr;
   modular_server_.parameter(constants::valves_parameter_name).getValue(valves_ptr);
   setValves(*valves_ptr);
+}
+
+void YArenaValveController::setAllValvesOffHandler(modular_server::Pin * pin_ptr)
+{
+  setAllValvesOff();
 }

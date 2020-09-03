@@ -45,8 +45,18 @@ const size_t valve_pin_numbers[ARM_COUNT][VALVE_PER_ARM_COUNT] =
 // Units
 
 // Properties
+const long initial_valves_setting_default[ARM_COUNT] =
+{
+  2,
+  2,
+  2
+};
 
 // Parameters
+const long valves_element_min = 0;
+const long valves_element_max = VALVE_PER_ARM_COUNT - 1;
+const long valves_length_min = ARM_COUNT;
+const long valves_length_max = ARM_COUNT;
 
 // Functions
 

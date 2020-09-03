@@ -26,8 +26,9 @@ public:
   YArenaValveController();
   virtual void setup();
 
-  void setValve(size_t arm,
+  void setArmValve(size_t arm,
     size_t valve);
+  void setAllValvesOff();
 
 private:
   modular_server::Pin pins_[y_arena_valve_controller::constants::PIN_COUNT_MAX];
@@ -37,15 +38,17 @@ private:
   modular_server::Function functions_[y_arena_valve_controller::constants::FUNCTION_COUNT_MAX];
   modular_server::Callback callbacks_[y_arena_valve_controller::constants::CALLBACK_COUNT_MAX];
 
-  void setValveOff(size_t arm,
+  void setArmValveOff(size_t arm,
     size_t valve);
-  void setValveOn(size_t arm,
+  void setArmValveOn(size_t arm,
     size_t valve);
-  void setAllValvesOff(size_t arm);
+  void setAllArmValvesOff(size_t arm);
   void setValves(ArduinoJson::JsonArray & valves);
+  void initializeValves();
 
   // Handlers
   void setValvesHandler();
+  void setAllValvesOffHandler(modular_server::Pin * pin_ptr);
 
 };
 
