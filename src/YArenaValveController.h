@@ -41,6 +41,7 @@ private:
     size_t valve);
   void setValveOn(size_t arm,
     size_t valve);
+  void setAllValvesOff(size_t arm);
   void setValves(ArduinoJson::JsonArray & valves);
 
   // Handlers

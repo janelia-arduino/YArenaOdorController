@@ -66,10 +66,7 @@ void YArenaValveController::setup()
 void YArenaValveController::setValve(size_t arm,
   size_t valve)
 {
-  for (size_t v=0; v<constants::VALVE_PER_ARM_COUNT; ++v)
-  {
-    setValveOff(arm,v);
-  }
+  setAllValvesOff(arm);
   setValveOn(arm,valve);
 }
 
@@ -83,6 +80,14 @@ void YArenaValveController::setValveOn(size_t arm,
   size_t valve)
 {
   digitalWrite(constants::valve_pin_numbers[arm][valve],HIGH);
+}
+
+void YArenaValveController::setAllValvesOff(size_t arm)
+{
+  for (size_t v=0; v<constants::VALVE_PER_ARM_COUNT; ++v)
+  {
+    setValveOff(arm,v);
+  }
 }
 
 void YArenaValveController::setValves(ArduinoJson::JsonArray & valves)
