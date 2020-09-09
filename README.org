@@ -17,6 +17,28 @@
 * API NAMES
 
   #+BEGIN_SRC js
+    {
+      "id": "getApi",
+      "result": {
+        "firmware": [
+          "YArenaValveController"
+        ],
+        "verbosity": "NAMES",
+        "functions": [
+          "getValvesOn",
+          "setValvesOn"
+        ],
+        "parameters": [
+          "valves"
+        ],
+        "properties": [
+          "initialValvesSetting"
+        ],
+        "callbacks": [
+          "setAllValvesOff"
+        ]
+      }
+    }
   #+END_SRC
 
 * API GENERAL
