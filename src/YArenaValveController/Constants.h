@@ -18,7 +18,7 @@ namespace constants
 //MAX values must be >= 1, >= created/copied count, < RAM limit
 enum{PROPERTY_COUNT_MAX=1};
 enum{PARAMETER_COUNT_MAX=1};
-enum{FUNCTION_COUNT_MAX=1};
+enum{FUNCTION_COUNT_MAX=2};
 enum{CALLBACK_COUNT_MAX=1};
 
 extern ConstantString device_name;
@@ -45,7 +45,8 @@ extern const long valves_length_min;
 extern const long valves_length_max;
 
 // Functions
-extern ConstantString set_valves_function_name;
+extern ConstantString get_valves_on_function_name;
+extern ConstantString set_valves_on_function_name;
 
 // Callbacks
 extern ConstantString set_all_valves_off_callback_name;

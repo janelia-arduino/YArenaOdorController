@@ -37,7 +37,8 @@ CONSTANT_STRING(initial_valves_setting_property_name,"initialValvesSetting");
 CONSTANT_STRING(valves_parameter_name,"valves");
 
 // Functions
-CONSTANT_STRING(set_valves_function_name,"setValves");
+CONSTANT_STRING(get_valves_on_function_name,"getValvesOn");
+CONSTANT_STRING(set_valves_on_function_name,"setValvesOn");
 
 // Callbacks
 CONSTANT_STRING(set_all_valves_off_callback_name,"setAllValvesOff");
