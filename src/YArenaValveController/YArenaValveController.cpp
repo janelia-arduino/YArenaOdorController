@@ -37,7 +37,7 @@ void YArenaValveController::setup()
     for (size_t valve=0; valve<constants::VALVE_PER_ARM_COUNT; ++valve)
     {
       pinMode(constants::valve_pin_numbers[arm][valve],OUTPUT);
-      setArmValveOutputOff(arm,valve);
+      setArmValveOutputClosed(arm,valve);
     }
   }
 
@@ -58,42 +58,42 @@ void YArenaValveController::setup()
   valves_parameter.setArrayLengthRange(constants::valves_length_min,constants::valves_length_max);
 
   // Functions
-  modular_server::Function & get_valves_on_function = modular_server_.createFunction(constants::get_valves_on_function_name);
-  get_valves_on_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::getValvesOnHandler));
+  modular_server::Function & get_valves_open_function = modular_server_.createFunction(constants::get_valves_open_function_name);
+  get_valves_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::getValvesOpenHandler));
 
-  modular_server::Function & set_valves_on_function = modular_server_.createFunction(constants::set_valves_on_function_name);
-  set_valves_on_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::setValvesOnHandler));
-  set_valves_on_function.addParameter(valves_parameter);
+  modular_server::Function & set_valves_open_function = modular_server_.createFunction(constants::set_valves_open_function_name);
+  set_valves_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::setValvesOpenHandler));
+  set_valves_open_function.addParameter(valves_parameter);
 
   // Callbacks
-  modular_server::Callback & set_all_valves_off_callback = modular_server_.createCallback(constants::set_all_valves_off_callback_name);
-  set_all_valves_off_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaValveController::setAllValvesOffHandler));
+  modular_server::Callback & set_all_valves_closed_callback = modular_server_.createCallback(constants::set_all_valves_closed_callback_name);
+  set_all_valves_closed_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaValveController::setAllValvesClosedHandler));
 
   initializeValves();
 }
 
-YArenaValveController::Valves YArenaValveController::getValvesOn()
+YArenaValveController::Valves YArenaValveController::getValvesOpen()
 {
-  return valves_on_;
+  return valves_open_;
 }
 
-void YArenaValveController::setValvesOn(Valves valves)
+void YArenaValveController::setValvesOpen(Valves valves)
 {
-  valves_on_.clear();
+  valves_open_.clear();
   for (size_t arm=0; arm<valves.size(); ++arm)
   {
     size_t valve = valves[arm];
-    setArmValveOn(arm,valve);
-    valves_on_.push_back(valve);
+    setArmValveOpen(arm,valve);
+    valves_open_.push_back(valve);
   }
 }
 
-void YArenaValveController::setAllValvesOff()
+void YArenaValveController::setAllValvesClosed()
 {
-  valves_on_.clear();
+  valves_open_.clear();
   for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
   {
-    setAllArmValveOutputsOff(arm);
+    setAllArmValveOutputsClosed(arm);
   }
 }
 
@@ -107,14 +107,14 @@ YArenaValveController::Valves YArenaValveController::jsonArrayToValves(ArduinoJs
   return valves;
 }
 
-void YArenaValveController::setArmValveOn(size_t arm,
+void YArenaValveController::setArmValveOpen(size_t arm,
   size_t valve)
 {
-  setAllArmValveOutputsOff(arm);
-  setArmValveOutputOn(arm,valve);
+  setAllArmValveOutputsClosed(arm);
+  setArmValveOutputOpen(arm,valve);
 }
 
-void YArenaValveController::setArmValveOutputOff(size_t arm,
+void YArenaValveController::setArmValveOutputClosed(size_t arm,
   size_t valve)
 {
   if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
@@ -124,7 +124,7 @@ void YArenaValveController::setArmValveOutputOff(size_t arm,
   digitalWrite(constants::valve_pin_numbers[arm][valve],LOW);
 }
 
-void YArenaValveController::setArmValveOutputOn(size_t arm,
+void YArenaValveController::setArmValveOutputOpen(size_t arm,
   size_t valve)
 {
   if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
@@ -134,11 +134,11 @@ void YArenaValveController::setArmValveOutputOn(size_t arm,
   digitalWrite(constants::valve_pin_numbers[arm][valve],HIGH);
 }
 
-void YArenaValveController::setAllArmValveOutputsOff(size_t arm)
+void YArenaValveController::setAllArmValveOutputsClosed(size_t arm)
 {
   for (size_t v=0; v<constants::VALVE_PER_ARM_COUNT; ++v)
   {
-    setArmValveOutputOff(arm,v);
+    setArmValveOutputClosed(arm,v);
   }
 }
 
@@ -152,32 +152,32 @@ void YArenaValveController::initializeValves()
     initial_valves_setting_property.getElementValue(arm,valve);
     valves.push_back(valve);
   }
-  setValvesOn(valves);
+  setValvesOpen(valves);
 }
 
-void YArenaValveController::getValvesOnHandler()
+void YArenaValveController::getValvesOpenHandler()
 {
-  Valves valves_on = getValvesOn();
+  Valves valves_open = getValvesOpen();
   modular_server_.response().writeResultKey();
   modular_server_.response().beginArray();
 
-  for (size_t arm=0; arm<valves_on.size(); ++arm)
+  for (size_t arm=0; arm<valves_open.size(); ++arm)
   {
-    modular_server_.response().write(valves_on[arm]);
+    modular_server_.response().write(valves_open[arm]);
   }
 
   modular_server_.response().endArray();
 }
 
-void YArenaValveController::setValvesOnHandler()
+void YArenaValveController::setValvesOpenHandler()
 {
   ArduinoJson::JsonArray json_array;
   modular_server_.parameter(constants::valves_parameter_name).getValue(json_array);
   Valves valves = jsonArrayToValves(json_array);
-  setValvesOn(valves);
+  setValvesOpen(valves);
 }
 
-void YArenaValveController::setAllValvesOffHandler(modular_server::Pin * pin_ptr)
+void YArenaValveController::setAllValvesClosedHandler(modular_server::Pin * pin_ptr)
 {
-  setAllValvesOff();
+  setAllValvesClosed();
 }

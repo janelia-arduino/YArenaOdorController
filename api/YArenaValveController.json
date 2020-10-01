@@ -7,10 +7,10 @@
     "verbosity": "GENERAL",
     "functions": [
       {
-        "name": "getValvesOn"
+        "name": "getValvesOpen"
       },
       {
-        "name": "setValvesOn",
+        "name": "setValvesOpen",
         "parameters": [
           "valves"
         ]
@@ -148,7 +148,7 @@
     ],
     "callbacks": [
       {
-        "name": "setAllValvesOff",
+        "name": "setAllValvesClosed",
         "functions": [
           {
             "name": "trigger"

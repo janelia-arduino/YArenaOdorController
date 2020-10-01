@@ -19,7 +19,7 @@ CONSTANT_STRING(firmware_name,"YArenaValveController");
 const modular_server::FirmwareInfo firmware_info =
 {
   .name_ptr=&firmware_name,
-  .version_major=1,
+  .version_major=2,
   .version_minor=0,
   .version_patch=0,
 };
@@ -37,11 +37,11 @@ CONSTANT_STRING(initial_valves_setting_property_name,"initialValvesSetting");
 CONSTANT_STRING(valves_parameter_name,"valves");
 
 // Functions
-CONSTANT_STRING(get_valves_on_function_name,"getValvesOn");
-CONSTANT_STRING(set_valves_on_function_name,"setValvesOn");
+CONSTANT_STRING(get_valves_open_function_name,"getValvesOpen");
+CONSTANT_STRING(set_valves_open_function_name,"setValvesOpen");
 
 // Callbacks
-CONSTANT_STRING(set_all_valves_off_callback_name,"setAllValvesOff");
+CONSTANT_STRING(set_all_valves_closed_callback_name,"setAllValvesClosed");
 
 // Errors
 }

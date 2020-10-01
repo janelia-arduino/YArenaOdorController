@@ -45,11 +45,11 @@ extern const long valves_length_min;
 extern const long valves_length_max;
 
 // Functions
-extern ConstantString get_valves_on_function_name;
-extern ConstantString set_valves_on_function_name;
+extern ConstantString get_valves_open_function_name;
+extern ConstantString set_valves_open_function_name;
 
 // Callbacks
-extern ConstantString set_all_valves_off_callback_name;
+extern ConstantString set_all_valves_closed_callback_name;
 
 // Errors
 }
