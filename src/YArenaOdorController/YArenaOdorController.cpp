@@ -37,7 +37,7 @@ void YArenaOdorController::setup()
     for (size_t odor=0; odor<constants::ODOR_PER_ARM_COUNT; ++odor)
     {
       pinMode(constants::odor_pin_numbers[arm][odor],OUTPUT);
-      setArmOdorOutputClosed(arm,odor);
+      setArmOdorValveClosed(arm,odor);
     }
   }
 
@@ -49,72 +49,61 @@ void YArenaOdorController::setup()
     callbacks_);
 
   // Properties
-  modular_server::Property & initial_odors_setting_property = modular_server_.createProperty(constants::initial_odors_setting_property_name,constants::initial_odors_setting_default);
-  initial_odors_setting_property.setRange(constants::odors_element_min,constants::odors_element_max);
+  modular_server::Property & initial_arena_odors_property = modular_server_.createProperty(constants::initial_arena_odors_property_name,constants::initial_arena_odors_default);
+  initial_arena_odors_property.setRange(constants::arena_odors_element_min,constants::arena_odors_element_max);
 
   // Parameters
-  modular_server::Parameter & odors_parameter = modular_server_.createParameter(constants::odors_parameter_name);
-  odors_parameter.setRange(constants::odors_element_min,constants::odors_element_max);
-  odors_parameter.setArrayLengthRange(constants::odors_length_min,constants::odors_length_max);
+  modular_server::Parameter & arena_odors_parameter = modular_server_.createParameter(constants::arena_odors_parameter_name);
+  arena_odors_parameter.setRange(constants::arena_odors_element_min,constants::arena_odors_element_max);
+  arena_odors_parameter.setArrayLengthRange(constants::arena_odors_length_min,constants::arena_odors_length_max);
 
   // Functions
-  modular_server::Function & get_odors_open_function = modular_server_.createFunction(constants::get_odors_open_function_name);
-  get_odors_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::getOdorsOpenHandler));
+  modular_server::Function & get_arena_odors_function = modular_server_.createFunction(constants::get_arena_odors_function_name);
+  get_arena_odors_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::getArenaOdorsHandler));
 
-  modular_server::Function & set_odors_open_function = modular_server_.createFunction(constants::set_odors_open_function_name);
-  set_odors_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::setOdorsOpenHandler));
-  set_odors_open_function.addParameter(odors_parameter);
+  modular_server::Function & set_arena_odors_function = modular_server_.createFunction(constants::set_arena_odors_function_name);
+  set_arena_odors_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::setArenaOdorsHandler));
+  set_arena_odors_function.addParameter(arena_odors_parameter);
 
   // Callbacks
-  modular_server::Callback & set_all_odors_closed_callback = modular_server_.createCallback(constants::set_all_odors_closed_callback_name);
-  set_all_odors_closed_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaOdorController::setAllOdorsClosedHandler));
 
-  initializeOdors();
+  initializeArenaOdors();
 }
 
-YArenaOdorController::Odors YArenaOdorController::getOdorsOpen()
+YArenaOdorController::ArenaOdors YArenaOdorController::getArenaOdors()
 {
-  return odors_open_;
+  return arena_odors_;
 }
 
-void YArenaOdorController::setOdorsOpen(Odors odors)
+void YArenaOdorController::setArenaOdors(ArenaOdors odors)
 {
-  odors_open_.clear();
+  arena_odors_.clear();
   for (size_t arm=0; arm<odors.size(); ++arm)
   {
     size_t odor = odors[arm];
-    setArmOdorOpen(arm,odor);
-    odors_open_.push_back(odor);
+    setArmOdor(arm,odor);
+    arena_odors_.push_back(odor);
   }
 }
 
-void YArenaOdorController::setAllOdorsClosed()
+YArenaOdorController::ArenaOdors YArenaOdorController::jsonArrayToArenaOdors(ArduinoJson::JsonArray json_array)
 {
-  odors_open_.clear();
-  for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
-  {
-    setAllArmOdorOutputsClosed(arm);
-  }
-}
-
-YArenaOdorController::Odors YArenaOdorController::jsonArrayToOdors(ArduinoJson::JsonArray json_array)
-{
-  Odors odors;
+  ArenaOdors arena_odors;
   for (long odor : json_array)
   {
-    odors.push_back(odor);
+    arena_odors.push_back(odor);
   }
-  return odors;
+  return arena_odors;
 }
 
-void YArenaOdorController::setArmOdorOpen(size_t arm,
+void YArenaOdorController::setArmOdor(size_t arm,
   size_t odor)
 {
-  setAllArmOdorOutputsClosed(arm);
-  setArmOdorOutputOpen(arm,odor);
+  setAllArmOdorValvesClosed(arm);
+  setArmOdorValveOpen(arm,odor);
 }
 
-void YArenaOdorController::setArmOdorOutputClosed(size_t arm,
+void YArenaOdorController::setArmOdorValveClosed(size_t arm,
   size_t odor)
 {
   if ((arm >= constants::ARM_COUNT) || (odor >= constants::ODOR_PER_ARM_COUNT))
@@ -124,7 +113,7 @@ void YArenaOdorController::setArmOdorOutputClosed(size_t arm,
   digitalWrite(constants::odor_pin_numbers[arm][odor],LOW);
 }
 
-void YArenaOdorController::setArmOdorOutputOpen(size_t arm,
+void YArenaOdorController::setArmOdorValveOpen(size_t arm,
   size_t odor)
 {
   if ((arm >= constants::ARM_COUNT) || (odor >= constants::ODOR_PER_ARM_COUNT))
@@ -134,50 +123,45 @@ void YArenaOdorController::setArmOdorOutputOpen(size_t arm,
   digitalWrite(constants::odor_pin_numbers[arm][odor],HIGH);
 }
 
-void YArenaOdorController::setAllArmOdorOutputsClosed(size_t arm)
+void YArenaOdorController::setAllArmOdorValvesClosed(size_t arm)
 {
   for (size_t v=0; v<constants::ODOR_PER_ARM_COUNT; ++v)
   {
-    setArmOdorOutputClosed(arm,v);
+    setArmOdorValveClosed(arm,v);
   }
 }
 
-void YArenaOdorController::initializeOdors()
+void YArenaOdorController::initializeArenaOdors()
 {
-  modular_server::Property & initial_odors_setting_property = modular_server_.property(constants::initial_odors_setting_property_name);
+  modular_server::Property & initial_arena_odors_property = modular_server_.property(constants::initial_arena_odors_property_name);
   long odor;
-  Odors odors;
+  ArenaOdors odors;
   for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
   {
-    initial_odors_setting_property.getElementValue(arm,odor);
+    initial_arena_odors_property.getElementValue(arm,odor);
     odors.push_back(odor);
   }
-  setOdorsOpen(odors);
+  setArenaOdors(odors);
 }
 
-void YArenaOdorController::getOdorsOpenHandler()
+void YArenaOdorController::getArenaOdorsHandler()
 {
-  Odors odors_open = getOdorsOpen();
+  ArenaOdors arena_odors = getArenaOdors();
   modular_server_.response().writeResultKey();
   modular_server_.response().beginArray();
 
-  for (size_t arm=0; arm<odors_open.size(); ++arm)
+  for (size_t arm=0; arm<arena_odors.size(); ++arm)
   {
-    modular_server_.response().write(odors_open[arm]);
+    modular_server_.response().write(arena_odors[arm]);
   }
 
   modular_server_.response().endArray();
 }
 
-void YArenaOdorController::setOdorsOpenHandler()
+void YArenaOdorController::setArenaOdorsHandler()
 {
   ArduinoJson::JsonArray json_array;
-  modular_server_.parameter(constants::odors_parameter_name).getValue(json_array);
-  Odors odors = jsonArrayToOdors(json_array);
-  setOdorsOpen(odors);
-}
-
-void YArenaOdorController::setAllOdorsClosedHandler(modular_server::Pin * pin_ptr)
-{
-  setAllOdorsClosed();
+  modular_server_.parameter(constants::arena_odors_parameter_name).getValue(json_array);
+  ArenaOdors arena_odors = jsonArrayToArenaOdors(json_array);
+  setArenaOdors(arena_odors);
 }

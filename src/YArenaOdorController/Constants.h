@@ -35,21 +35,20 @@ extern const modular_server::HardwareInfo hardware_info;
 
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
-extern ConstantString initial_odors_setting_property_name;
+extern ConstantString initial_arena_odors_property_name;
 
 // Parameters
-extern ConstantString odors_parameter_name;
-extern const long odors_element_min;
-extern const long odors_element_max;
-extern const long odors_length_min;
-extern const long odors_length_max;
+extern ConstantString arena_odors_parameter_name;
+extern const long arena_odors_element_min;
+extern const long arena_odors_element_max;
+extern const long arena_odors_length_min;
+extern const long arena_odors_length_max;
 
 // Functions
-extern ConstantString get_odors_open_function_name;
-extern ConstantString set_odors_open_function_name;
+extern ConstantString get_arena_odors_function_name;
+extern ConstantString set_arena_odors_function_name;
 
 // Callbacks
-extern ConstantString set_all_odors_closed_callback_name;
 
 // Errors
 }

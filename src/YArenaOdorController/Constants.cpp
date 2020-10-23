@@ -31,17 +31,16 @@ CONSTANT_STRING(hardware_name,"y_arena_odor_controller");
 // Units
 
 // Properties
-CONSTANT_STRING(initial_odors_setting_property_name,"initialOdorsSetting");
+CONSTANT_STRING(initial_arena_odors_property_name,"initialArenaOdors");
 
 // Parameters
-CONSTANT_STRING(odors_parameter_name,"odors");
+CONSTANT_STRING(arena_odors_parameter_name,"arena_odors");
 
 // Functions
-CONSTANT_STRING(get_odors_open_function_name,"getOdorsOpen");
-CONSTANT_STRING(set_odors_open_function_name,"setOdorsOpen");
+CONSTANT_STRING(get_arena_odors_function_name,"getArenaOdors");
+CONSTANT_STRING(set_arena_odors_function_name,"setArenaOdors");
 
 // Callbacks
-CONSTANT_STRING(set_all_odors_closed_callback_name,"setAllOdorsClosed");
 
 // Errors
 }

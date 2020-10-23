@@ -29,7 +29,7 @@ extern const size_t odor_pin_numbers[ARM_COUNT][ODOR_PER_ARM_COUNT];
 
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
-extern const long initial_odors_setting_default[ARM_COUNT];
+extern const long initial_arena_odors_default[ARM_COUNT];
 
 // Parameters
 

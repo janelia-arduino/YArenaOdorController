@@ -17,28 +17,6 @@
 * API NAMES
 
   #+BEGIN_SRC js
-    {
-      "id": "getApi",
-      "result": {
-        "firmware": [
-          "YArenaOdorController"
-        ],
-        "verbosity": "NAMES",
-        "functions": [
-          "getOdorsOpen",
-          "setOdorsOpen"
-        ],
-        "parameters": [
-          "odors"
-        ],
-        "properties": [
-          "initialOdorsSetting"
-        ],
-        "callbacks": [
-          "setAllOdorsClosed"
-        ]
-      }
-    }
   #+END_SRC
 
 * API GENERAL

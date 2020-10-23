@@ -26,11 +26,10 @@ public:
   YArenaOdorController();
   virtual void setup();
 
-  typedef Array<long,y_arena_odor_controller::constants::ARM_COUNT> Odors;
+  typedef Array<long,y_arena_odor_controller::constants::ARM_COUNT> ArenaOdors;
 
-  Odors getOdorsOpen();
-  void setOdorsOpen(Odors odors);
-  void setAllOdorsClosed();
+  ArenaOdors getArenaOdors();
+  void setArenaOdors(ArenaOdors arena_odors);
 
 private:
   modular_server::Pin pins_[y_arena_odor_controller::constants::PIN_COUNT_MAX];
@@ -40,23 +39,22 @@ private:
   modular_server::Function functions_[y_arena_odor_controller::constants::FUNCTION_COUNT_MAX];
   modular_server::Callback callbacks_[y_arena_odor_controller::constants::CALLBACK_COUNT_MAX];
 
-  Odors odors_open_;
+  ArenaOdors arena_odors_;
 
-  Odors jsonArrayToOdors(ArduinoJson::JsonArray json_array);
+  ArenaOdors jsonArrayToArenaOdors(ArduinoJson::JsonArray json_array);
 
-  void setArmOdorOpen(size_t arm,
+  void setArmOdor(size_t arm,
     size_t odor);
-  void setArmOdorOutputClosed(size_t arm,
+  void setArmOdorValveClosed(size_t arm,
     size_t odor);
-  void setArmOdorOutputOpen(size_t arm,
+  void setArmOdorValveOpen(size_t arm,
     size_t odor);
-  void setAllArmOdorOutputsClosed(size_t arm);
-  void initializeOdors();
+  void setAllArmOdorValvesClosed(size_t arm);
+  void initializeArenaOdors();
 
   // Handlers
-  void getOdorsOpenHandler();
-  void setOdorsOpenHandler();
-  void setAllOdorsClosedHandler(modular_server::Pin * pin_ptr);
+  void getArenaOdorsHandler();
+  void setArenaOdorsHandler();
 
 };
 

@@ -25,17 +25,17 @@ const size_t odor_pin_numbers[ARM_COUNT][ODOR_PER_ARM_COUNT] =
 {
   {
     22,
-    21,
-    20
-  },
-  {
     19,
-    18,
-    17
+    16
   },
   {
-    16,
-    15,
+    21,
+    18,
+    15
+  },
+  {
+    20,
+    17,
     14
   }
 };
@@ -45,18 +45,18 @@ const size_t odor_pin_numbers[ARM_COUNT][ODOR_PER_ARM_COUNT] =
 // Units
 
 // Properties
-const long initial_odors_setting_default[ARM_COUNT] =
+const long initial_arena_odors_default[ARM_COUNT] =
 {
-  2,
-  2,
-  2
+  0,
+  0,
+  0
 };
 
 // Parameters
-const long odors_element_min = 0;
-const long odors_element_max = ODOR_PER_ARM_COUNT - 1;
-const long odors_length_min = ARM_COUNT;
-const long odors_length_max = ARM_COUNT;
+const long arena_odors_element_min = 0;
+const long arena_odors_element_max = ODOR_PER_ARM_COUNT - 1;
+const long arena_odors_length_min = ARM_COUNT;
+const long arena_odors_length_max = ARM_COUNT;
 
 // Functions
 
