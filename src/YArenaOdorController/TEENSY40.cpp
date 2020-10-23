@@ -9,7 +9,7 @@
 
 
 #if defined(__IMXRT1062__) && defined(ARDUINO_TEENSY40)
-namespace y_arena_valve_controller
+namespace y_arena_odor_controller
 {
 namespace constants
 {
@@ -21,7 +21,7 @@ const modular_server::HardwareInfo hardware_info =
   .version_minor=2,
 };
 
-const size_t valve_pin_numbers[ARM_COUNT][VALVE_PER_ARM_COUNT] =
+const size_t odor_pin_numbers[ARM_COUNT][ODOR_PER_ARM_COUNT] =
 {
   {
     22,
@@ -45,7 +45,7 @@ const size_t valve_pin_numbers[ARM_COUNT][VALVE_PER_ARM_COUNT] =
 // Units
 
 // Properties
-const long initial_valves_setting_default[ARM_COUNT] =
+const long initial_odors_setting_default[ARM_COUNT] =
 {
   2,
   2,
@@ -53,10 +53,10 @@ const long initial_valves_setting_default[ARM_COUNT] =
 };
 
 // Parameters
-const long valves_element_min = 0;
-const long valves_element_max = VALVE_PER_ARM_COUNT - 1;
-const long valves_length_min = ARM_COUNT;
-const long valves_length_max = ARM_COUNT;
+const long odors_element_min = 0;
+const long odors_element_max = ODOR_PER_ARM_COUNT - 1;
+const long odors_length_min = ARM_COUNT;
+const long odors_length_max = ARM_COUNT;
 
 // Functions
 

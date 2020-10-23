@@ -1,7 +1,7 @@
-#include <YArenaValveController.h>
+#include <YArenaOdorController.h>
 
 
-YArenaValveController dev;
+YArenaOdorController dev;
 
 void setup()
 {

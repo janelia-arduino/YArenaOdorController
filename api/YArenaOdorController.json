@@ -2,30 +2,30 @@
   "id": "getApi",
   "result": {
     "firmware": [
-      "YArenaValveController"
+      "YArenaOdorController"
     ],
     "verbosity": "GENERAL",
     "functions": [
       {
-        "name": "getValvesOpen"
+        "name": "getOdorsOpen"
       },
       {
-        "name": "setValvesOpen",
+        "name": "setOdorsOpen",
         "parameters": [
-          "valves"
+          "odors"
         ]
       }
     ],
     "parameters": [
       {
-        "name": "valves",
+        "name": "odors",
         "type": "array",
         "array_element_type": "long"
       }
     ],
     "properties": [
       {
-        "name": "initialValvesSetting",
+        "name": "initialOdorsSetting",
         "type": "array",
         "array_element_type": "long",
         "functions": [
@@ -148,7 +148,7 @@
     ],
     "callbacks": [
       {
-        "name": "setAllValvesClosed",
+        "name": "setAllOdorsClosed",
         "functions": [
           {
             "name": "trigger"

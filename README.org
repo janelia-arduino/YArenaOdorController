@@ -1,12 +1,12 @@
-#+TITLE: YArenaValveController
+#+TITLE: YArenaOdorController
 #+AUTHOR: Peter Polidoro
 #+EMAIL: peterpolidoro@gmail.com
 
 * Library Information
-  - Name :: YArenaValveController
+  - Name :: YArenaOdorController
   - Version :: 2.0.0
   - License :: BSD
-  - URL :: https://github.com/janelia-arduino/YArenaValveController
+  - URL :: https://github.com/janelia-arduino/YArenaOdorController
   - Author :: Peter Polidoro
   - Email :: peterpolidoro@gmail.com
 
@@ -21,21 +21,21 @@
       "id": "getApi",
       "result": {
         "firmware": [
-          "YArenaValveController"
+          "YArenaOdorController"
         ],
         "verbosity": "NAMES",
         "functions": [
-          "getValvesOpen",
-          "setValvesOpen"
+          "getOdorsOpen",
+          "setOdorsOpen"
         ],
         "parameters": [
-          "valves"
+          "odors"
         ],
         "properties": [
-          "initialValvesSetting"
+          "initialOdorsSetting"
         ],
         "callbacks": [
-          "setAllValvesClosed"
+          "setAllOdorsClosed"
         ]
       }
     }
@@ -57,7 +57,7 @@
 
   [[https://github.com/janelia-modular-devices/modular_device_base]]
 
-  [[https://github.com/janelia-modular-devices/y_arena_valve_controller]]
+  [[https://github.com/janelia-modular-devices/y_arena_odor_controller]]
 
 * More Detailed Modular Device Information
 

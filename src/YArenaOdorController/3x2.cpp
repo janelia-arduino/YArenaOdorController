@@ -10,7 +10,7 @@
 
 #if defined(__MK20DX256__)
 
-namespace y_arena_valve_controller
+namespace y_arena_odor_controller
 {
 namespace constants
 {

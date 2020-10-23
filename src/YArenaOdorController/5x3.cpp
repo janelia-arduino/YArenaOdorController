@@ -10,7 +10,7 @@
 
 #if defined(__MK64FX512__)
 
-namespace y_arena_valve_controller
+namespace y_arena_odor_controller
 {
 namespace constants
 {

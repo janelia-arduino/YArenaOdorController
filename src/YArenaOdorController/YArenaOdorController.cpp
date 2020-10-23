@@ -1,20 +1,20 @@
 // ----------------------------------------------------------------------------
-// YArenaValveController.cpp
+// YArenaOdorController.cpp
 //
 //
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#include "../YArenaValveController.h"
+#include "../YArenaOdorController.h"
 
 
-using namespace y_arena_valve_controller;
+using namespace y_arena_odor_controller;
 
-YArenaValveController::YArenaValveController()
+YArenaOdorController::YArenaOdorController()
 {
 }
 
-void YArenaValveController::setup()
+void YArenaOdorController::setup()
 {
   // Parent Setup
   ModularDeviceBase::setup();
@@ -34,10 +34,10 @@ void YArenaValveController::setup()
   // Pins
   for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
   {
-    for (size_t valve=0; valve<constants::VALVE_PER_ARM_COUNT; ++valve)
+    for (size_t odor=0; odor<constants::ODOR_PER_ARM_COUNT; ++odor)
     {
-      pinMode(constants::valve_pin_numbers[arm][valve],OUTPUT);
-      setArmValveOutputClosed(arm,valve);
+      pinMode(constants::odor_pin_numbers[arm][odor],OUTPUT);
+      setArmOdorOutputClosed(arm,odor);
     }
   }
 
@@ -49,135 +49,135 @@ void YArenaValveController::setup()
     callbacks_);
 
   // Properties
-  modular_server::Property & initial_valves_setting_property = modular_server_.createProperty(constants::initial_valves_setting_property_name,constants::initial_valves_setting_default);
-  initial_valves_setting_property.setRange(constants::valves_element_min,constants::valves_element_max);
+  modular_server::Property & initial_odors_setting_property = modular_server_.createProperty(constants::initial_odors_setting_property_name,constants::initial_odors_setting_default);
+  initial_odors_setting_property.setRange(constants::odors_element_min,constants::odors_element_max);
 
   // Parameters
-  modular_server::Parameter & valves_parameter = modular_server_.createParameter(constants::valves_parameter_name);
-  valves_parameter.setRange(constants::valves_element_min,constants::valves_element_max);
-  valves_parameter.setArrayLengthRange(constants::valves_length_min,constants::valves_length_max);
+  modular_server::Parameter & odors_parameter = modular_server_.createParameter(constants::odors_parameter_name);
+  odors_parameter.setRange(constants::odors_element_min,constants::odors_element_max);
+  odors_parameter.setArrayLengthRange(constants::odors_length_min,constants::odors_length_max);
 
   // Functions
-  modular_server::Function & get_valves_open_function = modular_server_.createFunction(constants::get_valves_open_function_name);
-  get_valves_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::getValvesOpenHandler));
+  modular_server::Function & get_odors_open_function = modular_server_.createFunction(constants::get_odors_open_function_name);
+  get_odors_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::getOdorsOpenHandler));
 
-  modular_server::Function & set_valves_open_function = modular_server_.createFunction(constants::set_valves_open_function_name);
-  set_valves_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaValveController::setValvesOpenHandler));
-  set_valves_open_function.addParameter(valves_parameter);
+  modular_server::Function & set_odors_open_function = modular_server_.createFunction(constants::set_odors_open_function_name);
+  set_odors_open_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&YArenaOdorController::setOdorsOpenHandler));
+  set_odors_open_function.addParameter(odors_parameter);
 
   // Callbacks
-  modular_server::Callback & set_all_valves_closed_callback = modular_server_.createCallback(constants::set_all_valves_closed_callback_name);
-  set_all_valves_closed_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaValveController::setAllValvesClosedHandler));
+  modular_server::Callback & set_all_odors_closed_callback = modular_server_.createCallback(constants::set_all_odors_closed_callback_name);
+  set_all_odors_closed_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&YArenaOdorController::setAllOdorsClosedHandler));
 
-  initializeValves();
+  initializeOdors();
 }
 
-YArenaValveController::Valves YArenaValveController::getValvesOpen()
+YArenaOdorController::Odors YArenaOdorController::getOdorsOpen()
 {
-  return valves_open_;
+  return odors_open_;
 }
 
-void YArenaValveController::setValvesOpen(Valves valves)
+void YArenaOdorController::setOdorsOpen(Odors odors)
 {
-  valves_open_.clear();
-  for (size_t arm=0; arm<valves.size(); ++arm)
+  odors_open_.clear();
+  for (size_t arm=0; arm<odors.size(); ++arm)
   {
-    size_t valve = valves[arm];
-    setArmValveOpen(arm,valve);
-    valves_open_.push_back(valve);
+    size_t odor = odors[arm];
+    setArmOdorOpen(arm,odor);
+    odors_open_.push_back(odor);
   }
 }
 
-void YArenaValveController::setAllValvesClosed()
+void YArenaOdorController::setAllOdorsClosed()
 {
-  valves_open_.clear();
+  odors_open_.clear();
   for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
   {
-    setAllArmValveOutputsClosed(arm);
+    setAllArmOdorOutputsClosed(arm);
   }
 }
 
-YArenaValveController::Valves YArenaValveController::jsonArrayToValves(ArduinoJson::JsonArray json_array)
+YArenaOdorController::Odors YArenaOdorController::jsonArrayToOdors(ArduinoJson::JsonArray json_array)
 {
-  Valves valves;
-  for (long valve : json_array)
+  Odors odors;
+  for (long odor : json_array)
   {
-    valves.push_back(valve);
+    odors.push_back(odor);
   }
-  return valves;
+  return odors;
 }
 
-void YArenaValveController::setArmValveOpen(size_t arm,
-  size_t valve)
+void YArenaOdorController::setArmOdorOpen(size_t arm,
+  size_t odor)
 {
-  setAllArmValveOutputsClosed(arm);
-  setArmValveOutputOpen(arm,valve);
+  setAllArmOdorOutputsClosed(arm);
+  setArmOdorOutputOpen(arm,odor);
 }
 
-void YArenaValveController::setArmValveOutputClosed(size_t arm,
-  size_t valve)
+void YArenaOdorController::setArmOdorOutputClosed(size_t arm,
+  size_t odor)
 {
-  if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
+  if ((arm >= constants::ARM_COUNT) || (odor >= constants::ODOR_PER_ARM_COUNT))
   {
     return;
   }
-  digitalWrite(constants::valve_pin_numbers[arm][valve],LOW);
+  digitalWrite(constants::odor_pin_numbers[arm][odor],LOW);
 }
 
-void YArenaValveController::setArmValveOutputOpen(size_t arm,
-  size_t valve)
+void YArenaOdorController::setArmOdorOutputOpen(size_t arm,
+  size_t odor)
 {
-  if ((arm >= constants::ARM_COUNT) || (valve >= constants::VALVE_PER_ARM_COUNT))
+  if ((arm >= constants::ARM_COUNT) || (odor >= constants::ODOR_PER_ARM_COUNT))
   {
     return;
   }
-  digitalWrite(constants::valve_pin_numbers[arm][valve],HIGH);
+  digitalWrite(constants::odor_pin_numbers[arm][odor],HIGH);
 }
 
-void YArenaValveController::setAllArmValveOutputsClosed(size_t arm)
+void YArenaOdorController::setAllArmOdorOutputsClosed(size_t arm)
 {
-  for (size_t v=0; v<constants::VALVE_PER_ARM_COUNT; ++v)
+  for (size_t v=0; v<constants::ODOR_PER_ARM_COUNT; ++v)
   {
-    setArmValveOutputClosed(arm,v);
+    setArmOdorOutputClosed(arm,v);
   }
 }
 
-void YArenaValveController::initializeValves()
+void YArenaOdorController::initializeOdors()
 {
-  modular_server::Property & initial_valves_setting_property = modular_server_.property(constants::initial_valves_setting_property_name);
-  long valve;
-  Valves valves;
+  modular_server::Property & initial_odors_setting_property = modular_server_.property(constants::initial_odors_setting_property_name);
+  long odor;
+  Odors odors;
   for (size_t arm=0; arm<constants::ARM_COUNT; ++arm)
   {
-    initial_valves_setting_property.getElementValue(arm,valve);
-    valves.push_back(valve);
+    initial_odors_setting_property.getElementValue(arm,odor);
+    odors.push_back(odor);
   }
-  setValvesOpen(valves);
+  setOdorsOpen(odors);
 }
 
-void YArenaValveController::getValvesOpenHandler()
+void YArenaOdorController::getOdorsOpenHandler()
 {
-  Valves valves_open = getValvesOpen();
+  Odors odors_open = getOdorsOpen();
   modular_server_.response().writeResultKey();
   modular_server_.response().beginArray();
 
-  for (size_t arm=0; arm<valves_open.size(); ++arm)
+  for (size_t arm=0; arm<odors_open.size(); ++arm)
   {
-    modular_server_.response().write(valves_open[arm]);
+    modular_server_.response().write(odors_open[arm]);
   }
 
   modular_server_.response().endArray();
 }
 
-void YArenaValveController::setValvesOpenHandler()
+void YArenaOdorController::setOdorsOpenHandler()
 {
   ArduinoJson::JsonArray json_array;
-  modular_server_.parameter(constants::valves_parameter_name).getValue(json_array);
-  Valves valves = jsonArrayToValves(json_array);
-  setValvesOpen(valves);
+  modular_server_.parameter(constants::odors_parameter_name).getValue(json_array);
+  Odors odors = jsonArrayToOdors(json_array);
+  setOdorsOpen(odors);
 }
 
-void YArenaValveController::setAllValvesClosedHandler(modular_server::Pin * pin_ptr)
+void YArenaOdorController::setAllOdorsClosedHandler(modular_server::Pin * pin_ptr)
 {
-  setAllValvesClosed();
+  setAllOdorsClosed();
 }

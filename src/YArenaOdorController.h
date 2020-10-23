@@ -1,12 +1,12 @@
 // ----------------------------------------------------------------------------
-// YArenaValveController.h
+// YArenaOdorController.h
 //
 //
 // Authors:
 // Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
-#ifndef Y_ARENA_VALVE_CONTROLLER_H
-#define Y_ARENA_VALVE_CONTROLLER_H
+#ifndef Y_ARENA_ODOR_CONTROLLER_H
+#define Y_ARENA_ODOR_CONTROLLER_H
 #include <ArduinoJson.h>
 #include <JsonStream.h>
 #include <Array.h>
@@ -17,46 +17,46 @@
 #include <ModularServer.h>
 #include <ModularDeviceBase.h>
 
-#include "YArenaValveController/Constants.h"
+#include "YArenaOdorController/Constants.h"
 
 
-class YArenaValveController : public ModularDeviceBase
+class YArenaOdorController : public ModularDeviceBase
 {
 public:
-  YArenaValveController();
+  YArenaOdorController();
   virtual void setup();
 
-  typedef Array<long,y_arena_valve_controller::constants::ARM_COUNT> Valves;
+  typedef Array<long,y_arena_odor_controller::constants::ARM_COUNT> Odors;
 
-  Valves getValvesOpen();
-  void setValvesOpen(Valves valves);
-  void setAllValvesClosed();
+  Odors getOdorsOpen();
+  void setOdorsOpen(Odors odors);
+  void setAllOdorsClosed();
 
 private:
-  modular_server::Pin pins_[y_arena_valve_controller::constants::PIN_COUNT_MAX];
+  modular_server::Pin pins_[y_arena_odor_controller::constants::PIN_COUNT_MAX];
 
-  modular_server::Property properties_[y_arena_valve_controller::constants::PROPERTY_COUNT_MAX];
-  modular_server::Parameter parameters_[y_arena_valve_controller::constants::PARAMETER_COUNT_MAX];
-  modular_server::Function functions_[y_arena_valve_controller::constants::FUNCTION_COUNT_MAX];
-  modular_server::Callback callbacks_[y_arena_valve_controller::constants::CALLBACK_COUNT_MAX];
+  modular_server::Property properties_[y_arena_odor_controller::constants::PROPERTY_COUNT_MAX];
+  modular_server::Parameter parameters_[y_arena_odor_controller::constants::PARAMETER_COUNT_MAX];
+  modular_server::Function functions_[y_arena_odor_controller::constants::FUNCTION_COUNT_MAX];
+  modular_server::Callback callbacks_[y_arena_odor_controller::constants::CALLBACK_COUNT_MAX];
 
-  Valves valves_open_;
+  Odors odors_open_;
 
-  Valves jsonArrayToValves(ArduinoJson::JsonArray json_array);
+  Odors jsonArrayToOdors(ArduinoJson::JsonArray json_array);
 
-  void setArmValveOpen(size_t arm,
-    size_t valve);
-  void setArmValveOutputClosed(size_t arm,
-    size_t valve);
-  void setArmValveOutputOpen(size_t arm,
-    size_t valve);
-  void setAllArmValveOutputsClosed(size_t arm);
-  void initializeValves();
+  void setArmOdorOpen(size_t arm,
+    size_t odor);
+  void setArmOdorOutputClosed(size_t arm,
+    size_t odor);
+  void setArmOdorOutputOpen(size_t arm,
+    size_t odor);
+  void setAllArmOdorOutputsClosed(size_t arm);
+  void initializeOdors();
 
   // Handlers
-  void getValvesOpenHandler();
-  void setValvesOpenHandler();
-  void setAllValvesClosedHandler(modular_server::Pin * pin_ptr);
+  void getOdorsOpenHandler();
+  void setOdorsOpenHandler();
+  void setAllOdorsClosedHandler(modular_server::Pin * pin_ptr);
 
 };
 
