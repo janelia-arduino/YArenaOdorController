@@ -17,6 +17,25 @@
 * API NAMES
 
   #+BEGIN_SRC js
+    {
+      "id": "getApi",
+      "result": {
+        "firmware": [
+          "YArenaOdorController"
+        ],
+        "verbosity": "NAMES",
+        "functions": [
+          "getArenaOdors",
+          "setArenaOdors"
+        ],
+        "parameters": [
+          "arena_odors"
+        ],
+        "properties": [
+          "initialArenaOdors"
+        ]
+      }
+    }
   #+END_SRC
 
 * API GENERAL
