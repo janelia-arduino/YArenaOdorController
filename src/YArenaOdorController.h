@@ -3,7 +3,7 @@
 //
 //
 // Authors:
-// Peter Polidoro peterpolidoro@gmail.com
+// Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
 #ifndef Y_ARENA_ODOR_CONTROLLER_H
 #define Y_ARENA_ODOR_CONTROLLER_H
